@@ -1,0 +1,54 @@
+import asyncio
+import websockets
+import multiprocessing
+import requests
+import os
+
+MAIN_SERVER_URL = 'http://localhost:5000'
+
+
+
+async def download_song_from_host(address):
+    file = await websocket.recv()
+    print(f"< {name}")
+    # TODO: make this a byte stream and save to ./songs
+    pass
+
+
+# launch process in fg to listen to client for typing
+# (P1)
+# when client types in, send req to server for song
+# wait for response, if 200, connect to other ip as server
+# download byte-stream from them.
+# save as mp3 in songs directory
+def client_interface():
+    while True:
+        song = input("What song should I search for? ")
+        print("Searching for song...")
+        r = requests.get(MAIN_SERVER_URL + '?song=song')
+        if r.status != 200:
+            print("Sorry! Something went wrong. Please try again")
+            continue
+        body = r.content
+        address = body['address']
+        download_song_from_host(address)
+
+
+# launch process in bg to listen to server
+# (P2)
+# wait for requests from central server (as a server, probably/websockets)
+# on recieving one, connect as client to recieved ip address with socket
+# pipe song through then close connection
+# continue to wait for server
+def connection_interface():
+    print("hi, i'm in the background")
+    pass
+
+
+def main():
+    p = multiprocessing.Process(target=connection_interface)
+    p.start()
+    client_interface()
+
+if __name__ == '__main__':
+    main()
