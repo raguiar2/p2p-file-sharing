@@ -5,6 +5,10 @@ app = Flask(__name__)
 # dummy song dict
 songs = {"test": "127.0.0.1"}
 
+@app.route("/")
+def index():
+    return "Hello, world"
+
 @app.route("/lookup_song")
 def home():
     song = request.args.get('song')

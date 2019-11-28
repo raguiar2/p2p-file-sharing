@@ -1,11 +1,9 @@
-from flask import Flask, jsonify, request, send_file
-import os
+from flask import Flask, request, send_file
 
 app = Flask(__name__)
 PORT_NO = 8000
 
 # dummy song dict
-songs = {"test": "127.0.0.1"}
 
 @app.route("/request_song")
 def send_song():
